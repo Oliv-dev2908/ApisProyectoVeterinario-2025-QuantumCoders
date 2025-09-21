@@ -1,4 +1,4 @@
-# from .usuarios import UsuarioBase, UsuarioCreate, UsuarioUpdate, UsuarioResponse, LoginRequest, Token
+from .usuarios import UsuarioBase, UsuarioCreate, UsuarioUpdate, UsuarioResponse, LoginRequest, Token
 # from .roles import RolBase, RolCreate, RolUpdate, RolResponse, PermisoBase, PermisoCreate, PermisoResponse
 from .clientes import ClienteBase, ClienteCreate, ClienteUpdate, ClienteResponse
 from .pacientes import PacienteBase, PacienteCreate, PacienteUpdate, PacienteResponse

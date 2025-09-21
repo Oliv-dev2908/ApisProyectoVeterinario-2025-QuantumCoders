@@ -19,7 +19,7 @@ class Consulta(Base):
 
     # Relaciones
     paciente = relationship("Paciente", back_populates="consultas")
-    # usuario = relationship("Usuario", back_populates="consultas")
+    usuario = relationship("Usuario", back_populates="consultas")
     constantes = relationship("ConstanteFisiologica", back_populates="consulta", uselist=False)
     estudios = relationship("Estudio", back_populates="consulta")
 
@@ -33,8 +33,8 @@ class ConstanteFisiologica(Base):
     pa = Column(String)  
     fc = Column(Integer)  
     fr = Column(Integer) 
-    trc = Column(Float) 
-    deshidratacion = Column(String)
+    trc = Column(String) 
+    deshidratacion = Column(Float)
     observaciones = Column(String)
 
     # Relaciones

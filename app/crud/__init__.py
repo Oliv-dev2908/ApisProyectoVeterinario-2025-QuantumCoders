@@ -1,4 +1,4 @@
-# from .usuarios import crud_usuario
+from .usuarios import crud_usuario
 # from .roles import crud_rol, crud_permiso
 from .clientes import crud_cliente
 from .pacientes import crud_paciente

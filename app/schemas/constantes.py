@@ -8,8 +8,8 @@ class ConstanteBase(BaseModel):
     pa: Optional[str] = None
     fc: Optional[int] = None
     fr: Optional[int] = None
-    trc: Optional[float] = None
-    deshidratacion: Optional[str] = None
+    trc: Optional[str] = None
+    deshidratacion: Optional[float] = None
     observaciones: Optional[str] = None
 
 class ConstanteCreate(ConstanteBase):

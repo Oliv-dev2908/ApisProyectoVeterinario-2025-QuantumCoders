@@ -8,11 +8,11 @@ class PacienteBase(BaseModel):
     especie: str
     raza: Optional[str] = None
     edad: Optional[int] = None
-    sexo: Optional[str] = None
+    sexo: Optional[bool] = None
     color: Optional[str] = None
     tamanocm: Optional[float] = None
     estado_reproductivo: Optional[str] = None
-    gestacion: Optional[str] = None
+    gestacion: Optional[bool] = None
     alimentacion: Optional[str] = None
     cirugiasprevias: Optional[str] = None
     estado: Optional[str] = None
@@ -29,11 +29,11 @@ class PacienteUpdate(BaseModel):
     especie: Optional[str] = None
     raza: Optional[str] = None
     edad: Optional[int] = None
-    sexo: Optional[str] = None
+    sexo: Optional[bool] = None
     color: Optional[str] = None
     tamanocm: Optional[float] = None
     estado_reproductivo: Optional[str] = None
-    gestacion: Optional[str] = None
+    gestacion: Optional[bool] = None
     alimentacion: Optional[str] = None
     cirugiasprevias: Optional[str] = None
     estado: Optional[str] = None
