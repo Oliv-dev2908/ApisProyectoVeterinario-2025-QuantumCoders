@@ -21,3 +21,6 @@ def delete_archivo(db: Session, archivo_id: str):
         db.delete(db_archivo)
         db.commit()
     return db_archivo
+
+def get_archivos_by_paciente(db: Session, paciente_id: int):
+    return db.query(ExpedienteArchivo).filter(ExpedienteArchivo.paciente_id == paciente_id).all()

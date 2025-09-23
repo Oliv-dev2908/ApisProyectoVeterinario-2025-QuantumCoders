@@ -40,6 +40,7 @@ app.include_router(estudios.router, prefix="/api/v1/estudios", tags=["estudios"]
 
 #Rutas Archivos
 app.include_router(expediente_archivos.router, prefix="/api/v1/expedientes", tags=["expedientes"])
+app.include_router(expediente_archivos.router, prefix="/api/v1/expediente_archivos", tags=["expediente_archivos"])
 
 @app.get("/")
 async def root():
