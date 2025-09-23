@@ -29,3 +29,10 @@ def delete_expediente_archivo(archivo_id: str, db: Session = Depends(get_db)):
     if db_archivo is None:
         raise HTTPException(status_code=404, detail="Archivo no encontrado")
     return db_archivo
+
+@router.get("/paciente/{paciente_id}", response_model=list[ExpedienteArchivo])
+def get_archivos_paciente(paciente_id: int, db: Session = Depends(get_db)):
+    archivos = crud.get_archivos_by_paciente(db, paciente_id)
+    if not archivos:
+        raise HTTPException(status_code=404, detail="No se encontraron archivos para este paciente")
+    return archivos
