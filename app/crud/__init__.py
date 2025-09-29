@@ -5,3 +5,6 @@ from .pacientes import crud_paciente
 from .consultas import crud_consulta
 from .constantes import crud_constante
 from .estudios import crud_estudio
+from .cirugias import crud_cirugia
+from .fisioterapia import crud_fisioterapia
+from .tratamientos import crud_tratamiento

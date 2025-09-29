@@ -6,7 +6,8 @@ import os
 from app.database import engine, Base
 from app.routes import (
     clientes, pacientes, 
-    consultas, constantes_fisiologicas, estudios, expediente_archivos
+    consultas, constantes_fisiologicas, estudios, expediente_archivos,
+    cirugias, fisioterapia, tratamientos
 )
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -41,6 +42,11 @@ app.include_router(estudios.router, prefix="/api/v1/estudios", tags=["estudios"]
 #Rutas Archivos
 app.include_router(expediente_archivos.router, prefix="/api/v1/expedientes", tags=["expedientes"])
 app.include_router(expediente_archivos.router, prefix="/api/v1/expediente_archivos", tags=["expediente_archivos"])
+
+#rutas nuevas
+app.include_router(cirugias.router, prefix="/api/v1/cirugias", tags=["cirugias"])
+app.include_router(fisioterapia.router, prefix="/api/v1/fisioterapia", tags=["fisioterapia"])
+app.include_router(tratamientos.router, prefix="/api/v1/tratamientos", tags=["tratamientos"])
 
 @app.get("/")
 async def root():
