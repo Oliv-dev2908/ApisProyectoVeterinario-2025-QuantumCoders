@@ -18,4 +18,6 @@ class Usuario(Base):
     # Relationships
     # rol = relationship("Rol", back_populates="usuarios")
     consultas = relationship("Consulta", back_populates="usuario")
-
+    cirugias = relationship("Cirugia", back_populates="usuario")
+    fisioterapias = relationship("Fisioterapia", back_populates="usuario")
+    tratamientos = relationship("Tratamiento", back_populates="usuario")

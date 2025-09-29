@@ -29,3 +29,7 @@ class Paciente(Base):
     cliente = relationship("Cliente", back_populates="pacientes")
     consultas = relationship("Consulta", back_populates="paciente")
     estudios = relationship("Estudio", back_populates="paciente")
+
+    cirugias = relationship("Cirugia", back_populates="paciente")
+    fisioterapias = relationship("Fisioterapia", back_populates="paciente")
+    tratamientos = relationship("Tratamiento", back_populates="paciente")
