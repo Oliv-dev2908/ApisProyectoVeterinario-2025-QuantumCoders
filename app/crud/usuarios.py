@@ -1,6 +1,8 @@
 from sqlalchemy.orm import Session
 from fastapi import HTTPException
 from app import models, schemas
+from datetime import datetime
+
 
 class CRUDUsuario:
 
