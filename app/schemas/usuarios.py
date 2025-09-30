@@ -1,35 +1,28 @@
-from pydantic import BaseModel
-from datetime import datetime
+from pydantic import BaseModel, EmailStr
 from typing import Optional
+from datetime import datetime
+import uuid
 
 class UsuarioBase(BaseModel):
     nombre: str
-    email: str
+    email: EmailStr
     rol_id: int
-    activo: bool = True
+    activo: Optional[bool] = True
 
 class UsuarioCreate(UsuarioBase):
-    contraseña: str
+    supabase_user_id: Optional[uuid.UUID] = None
 
 class UsuarioUpdate(BaseModel):
     nombre: Optional[str] = None
-    email: Optional[str] = None
+    email: Optional[EmailStr] = None
     rol_id: Optional[int] = None
     activo: Optional[bool] = None
-    contraseña: Optional[str] = None
 
 class UsuarioResponse(UsuarioBase):
     id_usuario: int
     created_at: datetime
-    updated_at: Optional[datetime]
+    updated_at: Optional[datetime] = None
+    supabase_user_id: Optional[uuid.UUID] = None
 
     class Config:
-        from_attributes = True
-
-class LoginRequest(BaseModel):
-    email: str
-    contraseña: str
-
-class Token(BaseModel):
-    access_token: str
-    token_type: str
+        orm_mode = True

@@ -1,4 +1,4 @@
-from .usuarios import crud_usuario
+
 # from .roles import crud_rol, crud_permiso
 from .clientes import crud_cliente
 from .pacientes import crud_paciente
@@ -8,3 +8,4 @@ from .estudios import crud_estudio
 from .cirugias import crud_cirugia
 from .fisioterapia import crud_fisioterapia
 from .tratamientos import crud_tratamiento
+from .usuarios import crud_usuario

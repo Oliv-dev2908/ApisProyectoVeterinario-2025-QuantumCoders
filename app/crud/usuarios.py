@@ -1,49 +1,60 @@
-from typing import Optional
 from sqlalchemy.orm import Session
-from passlib.context import CryptContext
+from fastapi import HTTPException
+from app import models, schemas
 
-from app.crud.base import CRUDBase
-from app.models.usuarios import Usuario
-from app.schemas.usuarios import UsuarioCreate, UsuarioUpdate
+class CRUDUsuario:
 
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+    # 🔹 Listar usuarios
+    def get_usuarios(self, db: Session, skip: int = 0, limit: int = 100):
+        return db.query(models.usuarios.Usuario).offset(skip).limit(limit).all()
 
-class CRUDUsuario(CRUDBase[Usuario, UsuarioCreate, UsuarioUpdate]):
-    def get_by_email(self, db: Session, *, email: str) -> Optional[Usuario]:
-        return db.query(Usuario).filter(Usuario.email == email).first()
+# 🔹 Obtener un usuario por ID
+    def get_usuario(self, db: Session, usuario_id: int):
+        usuario = db.query(models.usuarios.Usuario).filter(models.usuarios.Usuario.id_usuario == usuario_id).first()
+        if not usuario:
+            raise HTTPException(status_code=404, detail="Usuario no encontrado")
+        return usuario
 
-    def create(self, db: Session, *, obj_in: UsuarioCreate) -> Usuario:
-        hashed_password = pwd_context.hash(obj_in.contraseña)
-        db_obj = Usuario(
-            nombre=obj_in.nombre,
-            email=obj_in.email,
-            contraseña_hash=hashed_password,
-            rol_id=obj_in.rol_id,
-            activo=obj_in.activo,
+# 🔹 Crear usuario
+    def create_usuario(self, db: Session, usuario: schemas.usuarios.UsuarioCreate):
+        db_usuario = models.usuarios.Usuario(
+            nombre=usuario.nombre,
+            email=usuario.email,
+            rol_id=usuario.rol_id,
+            activo=usuario.activo,
+            supabase_user_id=usuario.supabase_user_id,
+            created_at=datetime.utcnow(),
+            updated_at=datetime.utcnow()
         )
-        db.add(db_obj)
+        db.add(db_usuario)
         db.commit()
-        db.refresh(db_obj)
-        return db_obj
+        db.refresh(db_usuario)
+        return db_usuario
 
-    def authenticate(self, db: Session, *, email: str, password: str) -> Optional[Usuario]:
-        user = self.get_by_email(db, email=email)
-        if not user:
-            return None
-        if not pwd_context.verify(password, user.contraseña_hash):
-            return None
-        return user
+# 🔹 Actualizar usuario
+    def update_usuario(self, db: Session, usuario_id: int, usuario: schemas.usuarios.UsuarioUpdate):
+        db_usuario = db.query(models.usuarios.Usuario).filter(models.usuarios.Usuario.id_usuario == usuario_id).first()
+        if not db_usuario:
+            raise HTTPException(status_code=404, detail="Usuario no encontrado")
 
-    def get(self, db: Session, id: int) -> Optional[Usuario]:
-        return db.query(self.model).filter(self.model.id_usuario == id).first()
+        db_usuario.nombre = usuario.nombre
+        db_usuario.email = usuario.email
+        db_usuario.rol_id = usuario.rol_id
+        db_usuario.activo = usuario.activo
+        db_usuario.updated_at = datetime.utcnow()
 
-    def get_multi(self, db: Session, *, skip: int = 0, limit: int = 100):
-        return db.query(self.model).offset(skip).limit(limit).all()
-
-    def remove(self, db: Session, *, id: int) -> Usuario:
-        obj = db.query(self.model).filter(self.model.id_usuario == id).first()
-        db.delete(obj)
         db.commit()
-        return obj
+        db.refresh(db_usuario)
+        return db_usuario
 
-crud_usuario = CRUDUsuario(Usuario)
+# 🔹 Eliminar usuario
+    def delete_usuario(self, db: Session, usuario_id: int):
+        db_usuario = db.query(models.usuarios.Usuario).filter(models.usuarios.Usuario.id_usuario == usuario_id).first()
+        if not db_usuario:
+            raise HTTPException(status_code=404, detail="Usuario no encontrado")
+
+        db.delete(db_usuario)
+        db.commit()
+        return {"message": "Usuario eliminado correctamente"}
+
+crud_usuario = CRUDUsuario()
