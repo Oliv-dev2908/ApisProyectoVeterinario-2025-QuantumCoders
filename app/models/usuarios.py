@@ -16,7 +16,7 @@ class Usuario(Base):
     activo = Column(Boolean, default=True)
     created_at = Column(TIMESTAMP(timezone=True), server_default=func.now())
     updated_at = Column(TIMESTAMP(timezone=True), onupdate=func.now())
-    supabase_user_id = Column(UUID(as_uuid=True), default=uuid.uuid4)
+    supabase_user_id = Column(UUID(as_uuid=True), unique=True, default=uuid.uuid4, nullable=False)
     consultas = relationship("Consulta", back_populates="usuario")
     cirugias = relationship("Cirugia", back_populates="usuario")
     fisioterapias = relationship("Fisioterapia", back_populates="usuario")

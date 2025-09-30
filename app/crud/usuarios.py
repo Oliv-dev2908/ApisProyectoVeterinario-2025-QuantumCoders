@@ -11,8 +11,10 @@ class CRUDUsuario:
         return db.query(models.usuarios.Usuario).offset(skip).limit(limit).all()
 
 # 🔹 Obtener un usuario por ID
-    def get_usuario(self, db: Session, usuario_id: int):
-        usuario = db.query(models.usuarios.Usuario).filter(models.usuarios.Usuario.id_usuario == usuario_id).first()
+    def get_usuario(self, db: Session, supabase_user_id: str):
+        usuario = db.query(models.usuarios.Usuario).filter(
+            models.usuarios.Usuario.supabase_user_id == supabase_user_id
+        ).first()
         if not usuario:
             raise HTTPException(status_code=404, detail="Usuario no encontrado")
         return usuario
@@ -34,8 +36,10 @@ class CRUDUsuario:
         return db_usuario
 
 # 🔹 Actualizar usuario
-    def update_usuario(self, db: Session, usuario_id: int, usuario: schemas.usuarios.UsuarioUpdate):
-        db_usuario = db.query(models.usuarios.Usuario).filter(models.usuarios.Usuario.id_usuario == usuario_id).first()
+    def update_usuario(self, db: Session, supabase_user_id: str, usuario: schemas.usuarios.UsuarioUpdate):
+        db_usuario = db.query(models.usuarios.Usuario).filter(
+            models.usuarios.Usuario.supabase_user_id == supabase_user_id
+        ).first()
         if not db_usuario:
             raise HTTPException(status_code=404, detail="Usuario no encontrado")
 
@@ -50,8 +54,10 @@ class CRUDUsuario:
         return db_usuario
 
 # 🔹 Eliminar usuario
-    def delete_usuario(self, db: Session, usuario_id: int):
-        db_usuario = db.query(models.usuarios.Usuario).filter(models.usuarios.Usuario.id_usuario == usuario_id).first()
+    def delete_usuario(self, db: Session, supabase_user_id: str):
+        db_usuario = db.query(models.usuarios.Usuario).filter(
+            models.usuarios.Usuario.supabase_user_id == supabase_user_id
+        ).first()
         if not db_usuario:
             raise HTTPException(status_code=404, detail="Usuario no encontrado")
 
