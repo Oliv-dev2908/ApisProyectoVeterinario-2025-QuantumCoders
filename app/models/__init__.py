@@ -2,7 +2,8 @@ from .usuarios import Usuario
 # from .roles import Rol, Permiso, RolPermiso
 from .clientes import Cliente
 from .pacientes import Paciente
-from .consultas import Consulta, ConstanteFisiologica
+from .consultas import Consulta
+from .constantes import ConstanteFisiologica
 from .estudios import Estudio
 from .cirugias import Cirugia
 from .fisioterapia import Fisioterapia

@@ -1,5 +1,5 @@
 from app.crud.base import CRUDBase
-from app.models.consultas import ConstanteFisiologica
+from app.models.constantes import ConstanteFisiologica
 from app.schemas.constantes import ConstanteCreate, ConstanteUpdate
 from sqlalchemy.orm import Session
 from typing import Optional

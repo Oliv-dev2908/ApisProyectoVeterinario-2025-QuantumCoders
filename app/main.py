@@ -6,8 +6,9 @@ import os
 from app.database import engine, Base
 from app.routes import (
     clientes, pacientes, 
-    consultas, constantes_fisiologicas, estudios, expediente_archivos,
-    cirugias, fisioterapia, tratamientos, usuarios, fases_tratamiento
+    estudios, expediente_archivos,
+    cirugias, fisioterapia, tratamientos, usuarios, fases_tratamiento,citas,
+    consultas,noAsistencias,recordatorios, constantes_fisiologicas
 )
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -51,6 +52,13 @@ app.include_router(tratamientos.router, prefix="/api/v1/tratamientos", tags=["tr
 
 #Rutas para usuarios
 app.include_router(usuarios.router, prefix="/api/v1/usuarios", tags=["usuarios"])
+
+#Rutas para Sprint3
+app.include_router(citas.router, prefix="/api/v1/citas", tags=["citas"])
+app.include_router(consultas.router, prefix="/api/v1/consultasCitas", tags=["consultasCitas"])
+app.include_router(noAsistencias.router, prefix="/api/v1/noAsistencias", tags=["noAsistencias"])
+app.include_router(recordatorios.router, prefix="/api/v1/recordatorios", tags=["recordatorios"])
+
 @app.get("/")
 async def root():
     return {"message": "Veterinaria Animal-Center API v1.0.0"}

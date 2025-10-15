@@ -11,6 +11,9 @@ class ConsultaBase(BaseModel):
     fechaproxconsulta: Optional[datetime] = None
     diagnosticopresuntivo: Optional[str] = None
     observaciones: Optional[str] = None
+    fecha: datetime
+    condicion: Optional[str] = None
+
 
 class ConsultaCreate(ConsultaBase):
     pass
@@ -24,6 +27,8 @@ class ConsultaUpdate(BaseModel):
     fechaproxconsulta: Optional[datetime] = None
     diagnosticopresuntivo: Optional[str] = None
     observaciones: Optional[str] = None
+    condicion: Optional[str] = None
+
 
 class ConsultaResponse(ConsultaBase):
     id_consulta: int
