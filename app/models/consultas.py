@@ -10,6 +10,7 @@ class Consulta(Base):
     id_paciente = Column(Integer, ForeignKey("pacientes.id_paciente"), nullable=False)
     id_usuario = Column(Integer, ForeignKey("usuarios.id_usuario"), nullable=False)
     fecha = Column(DateTime(timezone=True), server_default=func.now())
+    id_cita = Column(Integer, ForeignKey("citas.id_cita"), nullable=True)  # nuevo campo
     motivo = Column(String)
     observaciones = Column(Text, nullable=True)
     signosclinicos = Column(String)
@@ -21,6 +22,8 @@ class Consulta(Base):
     # Relaciones
     paciente = relationship("Paciente", back_populates="consultas")
     usuario = relationship("Usuario", back_populates="consultas")
-    constantes = relationship("ConstanteFisiologica", back_populates="consulta", uselist=False)
+    cita = relationship("Cita", back_populates="consultas", uselist=False, foreign_keys=[id_cita])  # relación opcional
+    constantes = relationship("ConstanteFisiologica", back_populates="consulta",cascade="all, delete", uselist=False)
     estudios = relationship("Estudio", back_populates="consulta")
+
 

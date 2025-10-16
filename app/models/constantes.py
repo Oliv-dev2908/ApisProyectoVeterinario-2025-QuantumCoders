@@ -6,7 +6,7 @@ from app.database import Base
 class ConstanteFisiologica(Base):
     __tablename__ = "constantes_fisiologicas"
 
-    id_consulta = Column(Integer, ForeignKey("consultas.id_consulta"), primary_key=True)
+    id_consulta = Column(Integer, ForeignKey("consultas.id_consulta", ondelete="CASCADE"), primary_key=True)
     peso = Column(Float)
     temperatura = Column(Float)
     pulso = Column(Integer)
