@@ -11,12 +11,22 @@ SUPABASE_DB_URL = os.getenv("SUPABASE_DB_URL")
 if not SUPABASE_DB_URL:
     raise ValueError("SUPABASE_DB_URL no fue seteada")
 
-engine = create_engine(SUPABASE_DB_URL)
+# Configuración optimizada para Supabase
+engine = create_engine(
+    SUPABASE_DB_URL,
+    pool_pre_ping=True,    
+    pool_recycle=300,     
+    pool_size=10,    
+    max_overflow=5,     
+    connect_args={        
+        "connect_timeout": 10
+    }
+)
+
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 Base = declarative_base()
 
-# Dependencia
 def get_db():
     db = SessionLocal()
     try:
