@@ -20,4 +20,14 @@ class CRUDConsulta(CRUDBase[Consulta, ConsultaCreate, ConsultaUpdate]):
         db.commit()
         return obj
 
+    def get_by_usuario(self, db: Session, usuario_id: int) -> List[Consulta]:
+        return db.query(self.model).filter(self.model.id_usuario == usuario_id).all()
+
+    def get_proximas_por_paciente(self, db: Session, paciente_id: int) -> List[Consulta]:
+        # ejemplo: retornar consultas con fechaproxconsulta no nula
+        return db.query(self.model).filter(
+            self.model.id_paciente == paciente_id,
+            self.model.fechaproxconsulta.isnot(None)
+        ).all()
+
 crud_consulta = CRUDConsulta(Consulta)

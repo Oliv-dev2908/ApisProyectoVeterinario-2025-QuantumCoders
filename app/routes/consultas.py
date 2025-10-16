@@ -51,6 +51,26 @@ def read_consultas_by_paciente(
     consultas = crud_consulta.get_by_paciente(db, paciente_id=paciente_id)
     return consultas
 
+# 🔵 Obtener consultas por usuario
+@router.get("/usuario/{usuario_id}", response_model=List[ConsultaResponse])
+def read_consultas_by_usuario(
+    *,
+    db: Session = Depends(get_db),
+    usuario_id: int
+):
+    consultas = crud_consulta.get_by_usuario(db, usuario_id=usuario_id)
+    return consultas
+
+# 🔵 Obtener próximas consultas de un paciente (fechaproxconsulta no nula)
+@router.get("/paciente/{paciente_id}/proximas", response_model=List[ConsultaResponse])
+def read_proximas_consultas_by_paciente(
+    *,
+    db: Session = Depends(get_db),
+    paciente_id: int
+):
+    consultas = crud_consulta.get_proximas_por_paciente(db, paciente_id=paciente_id)
+    return consultas
+
 @router.put("/{consulta_id}", response_model=ConsultaResponse)
 def update_consulta(
     *,
