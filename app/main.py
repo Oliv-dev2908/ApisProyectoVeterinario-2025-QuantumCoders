@@ -9,6 +9,7 @@ from app.routes import (
     consultas, constantes_fisiologicas, estudios, expediente_archivos,
     cirugias, fisioterapia, tratamientos, usuarios, fases_tratamiento
 )
+from app.routes.machine_learning import router as ml_router
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     Base.metadata.create_all(bind=engine)
@@ -49,6 +50,8 @@ app.include_router(cirugias.router, prefix="/api/v1/cirugias", tags=["cirugias"]
 app.include_router(fisioterapia.router, prefix="/api/v1/fisioterapia", tags=["fisioterapia"])
 app.include_router(tratamientos.router, prefix="/api/v1/tratamientos", tags=["tratamientos"])
 
+#Rutas para ml
+app.include_router(ml_router)
 #Rutas para usuarios
 app.include_router(usuarios.router, prefix="/api/v1/usuarios", tags=["usuarios"])
 @app.get("/")

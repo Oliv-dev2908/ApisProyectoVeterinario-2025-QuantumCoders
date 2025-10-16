@@ -1,0 +1,1 @@
+SELECT * FROM cliente_features_v LIMIT 100000;
