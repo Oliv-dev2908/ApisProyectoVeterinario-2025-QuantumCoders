@@ -5,7 +5,7 @@ from enum import Enum
 
 class EstadoTratamiento(str, Enum):
     pendiente = "pendiente"
-    completada = "completada"
+    completado = "completado"
     cancelada = "cancelada"
 
 class TratamientoBase(BaseModel):

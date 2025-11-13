@@ -5,9 +5,8 @@ import enum
 
 class EstadoTratamiento(enum.Enum):
     pendiente = "pendiente"
-    completada = "completada"
+    completado = "completado"
     cancelada = "cancelada"
-
 class Tratamiento(Base):
     __tablename__ = "tratamientos"
 
