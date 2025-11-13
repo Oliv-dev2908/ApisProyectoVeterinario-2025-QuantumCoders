@@ -22,7 +22,7 @@ def run_hdbscan_and_plot(df: pd.DataFrame, target_variance: float = 0.90, min_cl
     X_num = X.select_dtypes(include=np.number).fillna(X.median())
     column_names = X_num.columns # Guardamos los nombres para los loadings
 
-    if len(X_num) < 20:
+    if len(X_num) < 10:
         raise ValueError("No hay suficientes filas para clusterizar.")
 
     # 1. Escalado
