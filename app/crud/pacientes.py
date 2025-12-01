@@ -8,8 +8,23 @@ class CRUDPaciente(CRUDBase[Paciente, PacienteCreate, PacienteUpdate]):
     def get(self, db: Session, id: int) -> Optional[Paciente]:
         return db.query(self.model).filter(self.model.id_paciente == id).first()
 
-    def get_multi(self, db: Session, *, skip: int = 0, limit: int = 400):
-        return db.query(self.model).offset(skip).limit(limit).all()
+    def get_multi(
+        self,
+        db: Session,
+        *,
+        skip: int = 0,
+        limit: int = 20,
+        search: Optional[str] = None
+    ) -> List[Paciente]:
+    
+    query = db.query(self.model)
+
+    if search:
+        query = query.filter(
+            self.model.nombre.ilike(f"%{search}%")
+        )
+
+    return query.offset(skip).limit(limit).all()
 
     def get_by_cliente(self, db: Session, cliente_id: int) -> List[Paciente]:
         return db.query(self.model).filter(self.model.id_cliente == cliente_id).all()
