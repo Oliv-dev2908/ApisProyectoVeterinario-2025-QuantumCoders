@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
-from typing import List
+from typing import List, Optional
 
 from app.database import get_db
 from app.crud.pacientes import crud_paciente
@@ -19,6 +19,40 @@ def create_paciente(
     paciente = crud_paciente.create(db, obj_in=paciente_in)
     return paciente
 
+@router.get("/pasMas")
+def read_pacientes_mas(
+    db: Session = Depends(get_db),
+    skip: int = 0,
+    limit: int = 20,
+    search: Optional[str] = None,
+):
+    pacientes, total = crud_paciente.get_multi_pas(
+        db,
+        skip=skip,
+        limit=min(limit, 100),  # protección PRO
+        search=search
+    )
+
+    return {
+        "items": [
+            {
+                "id_paciente": p.id_paciente,
+                "nombre": p.nombre,
+                "especie": p.especie,
+                "raza": p.raza,
+                "edad": p.edad,
+                "cliente": {
+                    "id_cliente": p.cliente.id_cliente,
+                    "nombre_completo": f"{p.cliente.nombres} {p.cliente.apellidos}",
+                    "telefono": p.cliente.telefono,
+                    "zona": p.cliente.zona,
+                }
+            }
+            for p in pacientes
+        ],
+        "total": total
+    }
+
 @router.get("/", response_model=List[PacienteResponse])
 def read_pacientes(
     db: Session = Depends(get_db),
@@ -28,6 +62,7 @@ def read_pacientes(
 ):
     pacientes = crud_paciente.get_multi(db, skip=skip, limit=limit)
     return pacientes
+
 
 @router.get("/{paciente_id}", response_model=PacienteResponse)
 def read_paciente(
