@@ -8,7 +8,7 @@ class CRUDCliente(CRUDBase[Cliente, ClienteCreate, ClienteUpdate]):
     def get(self, db: Session, id: int) -> Optional[Cliente]:
         return db.query(self.model).filter(self.model.id_cliente == id).first()
 
-    def get_multi(self, db: Session, *, skip: int = 0, limit: int = 100):
+    def get_multi(self, db: Session, *, skip: int = 0, limit: int = 500):
         return db.query(self.model).offset(skip).limit(limit).all()
 
     def remove(self, db: Session, *, id: int) -> Cliente:
