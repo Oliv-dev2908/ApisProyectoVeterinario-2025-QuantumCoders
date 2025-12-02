@@ -23,7 +23,7 @@ def create_cliente(
 def read_clientes(
     db: Session = Depends(get_db),
     skip: int = 0,
-    limit: int = 100,
+    limit: int = 500,
     # current_user = Depends(get_current_active_user)
 ):
     clientes = crud_cliente.get_multi(db, skip=skip, limit=limit)

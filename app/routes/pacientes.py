@@ -23,7 +23,7 @@ def create_paciente(
 def read_pacientes(
     db: Session = Depends(get_db),
     skip: int = 0,
-    limit: int = 100,
+    limit: int = 500,
     # current_user = Depends(get_current_active_user)
 ):
     pacientes = crud_paciente.get_multi(db, skip=skip, limit=limit)
